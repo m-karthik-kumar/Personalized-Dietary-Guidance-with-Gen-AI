@@ -12,14 +12,14 @@ from nltk.stem import WordNetLemmatizer
 import google.generativeai as genai
 
 app = Flask(__name__)
-app.secret_key = 'Karthik@1234'
+app.secret_key = 'Test@1234'
 
 
 # MySQL Configuration
 MYSQL_HOST = 'localhost'
 MYSQL_USER = 'root'
-MYSQL_PASSWORD = 'karthik@123'
-MYSQL_DB = 'final_project'
+MYSQL_PASSWORD = 'Test@123'
+MYSQL_DB = 'Dietary_Guidance'
 
 # Connect to MySQL
 conn = pymysql.connect(host=MYSQL_HOST, user=MYSQL_USER, password=MYSQL_PASSWORD, db=MYSQL_DB, cursorclass=pymysql.cursors.DictCursor)
@@ -173,7 +173,7 @@ def gemini(age,gender,health_conditions):
 #$ pip install google-generativeai
 
 
-    genai.configure(api_key="AIzaSyCXtXRmxJYyclYQ306vZ8FmduHR_79E_Sc")
+    genai.configure(api_key="XXXXX")
 
     # Set up the model
     generation_config = {
@@ -258,7 +258,7 @@ def gemini2(age,gender,health_conditions,restrictions, user_allergies,matching_f
 #$ pip install google-generativeai
 
 
-    genai.configure(api_key="AIzaSyCXtXRmxJYyclYQ306vZ8FmduHR_79E_Sc")
+    genai.configure(api_key="XXXXXX")
 
     # Set up the model
     generation_config = {
