@@ -1,0 +1,38 @@
+body {
+    background-color: #e9f5e9; /* Light green background */
+    /* font-style: italic; */
+    font-family: 'Times New Roman', Times, serif;
+}
+.navbar {
+    background-color: #28a745; /* Green navbar */
+}
+.navbar-brand, .nav-link {
+    color: #fff !important; /* White text for navbar brand and links */
+}
+.btn-primary {
+    background-color: #28a745; /* Green primary button */
+    border-color: #28a745;
+}
+.btn-primary:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+.btn-secondary {
+    background-color: #218838; /* Darker green secondary button */
+    border-color: #1e7e34;
+}
+.btn-secondary:hover {
+    background-color: #1c7430;
+    border-color: #18672b;
+}
+.btn-outline-success {
+    color: #28a745;
+    border-color: #28a745;
+}
+.btn-outline-success:hover {
+    background-color: #28a745;
+    color: #fff;
+}
+.list-group-item {
+    background-color: #e9f5e9; /* Light green list group items */
+}

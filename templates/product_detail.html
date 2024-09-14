@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Detail</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+     <!-- Bootstrap Icons -->
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #e9f5e9;
+            /* Light green background */
+        }
+
+        .navbar {
+            background-color: #28a745;
+            /* Green navbar */
+        }
+
+        .navbar-brand,
+        .nav-link {
+            color: #fff !important;
+            /* White text for navbar brand and links */
+        }
+
+        .btn-primary {
+            background-color: #28a745;
+            /* Green primary button */
+            border-color: #28a745;
+        }
+
+        .btn-primary:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+
+        .card {
+            margin: 20px;
+        }
+
+        .card img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .product-detail {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .product-image {
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .product-info {
+            flex: 2;
+            padding-left: 20px;
+        }
+
+        .product-info h2,
+        .product-info h3 {
+            margin-top: 10px;
+        }
+        .icon {
+            height: 30px;
+            width: 30px;
+            margin-right: 8px;
+        }
+
+        .icon-text {
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="#">NutriGen</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="d-flex align-items-center justify-content-center mt-5">
+        <div class="card w-75 p-3">
+            <div class="card-body">
+                <h1 class="card-title text-center">Product Detail</h1>
+                {% if product_info %}
+                <div class="product-detail">
+                    <div class="product-image">
+                        <img src="{{ product_info.image }}" alt="Product Image" class="img-fluid" />
+                    </div>
+                    <div class="product-info">
+                        <h2>{{ product_info.product_name }}</h2>
+                        <h3>{{ product_info.brand }}</h3>
+                        <div>
+                            {% for conc in product_info.final_conc %}
+                                <p>{{ conc }}</p>
+                            {% endfor %}
+                        </div>
+                        <!-- <h3>Nutri Score</h3> -->
+                        <h4>
+                            {% if product_info.nutri_score == 'A' %}
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/7/7d/Nutri-score-A.svg" alt="Nutri Score A">
+                            {% elif product_info.nutri_score == 'B' %}
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Nutri-score-B.svg" alt="Nutri Score B">
+                            {% elif product_info.nutri_score == 'C' %}
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/Nutri-score-C.svg" alt="Nutri Score C">
+                            {% elif product_info.nutri_score == 'D' %}
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d6/Nutri-score-D.svg" alt="Nutri Score D">
+                            {% elif product_info.nutri_score == 'E' %}
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/8/8a/Nutri-score-E.svg" alt="Nutri Score E">
+                            {% else %}
+                                {{ product_info.nutri_score }}
+                            {% endif %}
+                        </h4>
+                        {% if product_info.conclusions %}
+                        <h4>Conclusions</h4>
+                        <ul>
+                            {% for conc in product_info.conclusions %}
+                                <li>{{ conc }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <p>No conclusions specified.</p>
+                        {% endif %}
+                        <div class="icon-text">
+                            <h3><img src="../static/assets/vecteezy_do-not-eating-or-drinking-symbol_.jpg" class="icon" alt="Allergens Icon"> Allergens detected</h3>
+                        </div>
+                        {% if product_info.allergens %}
+                        <ul>
+                            {% for allergy in product_info.allergens %}
+                                <li>{{ allergy }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <p>No Allergens detected</p>
+                        {% endif %}
+                        <h3><i class="bi bi-exclamation-diamond-fill" style="color: #cc3300;"></i> Warnings</h3>
+                        {% if product_info.warnings %}
+                        <ul>
+                            {% for war in product_info.warnings %}
+                                <li>{{ war }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <p>No Warnings detected</p>
+                        {% endif %}
+                        <h3>Ingredients</h3>
+                        <p>{{ product_info.ingridients }}</p>
+                        <h3>Nutrients per 100g</h3>
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Energy</th>
+                                    <td>{{ product_info.energy }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Fat</th>
+                                    <td>{{ product_info.fat }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Saturated Fat</th>
+                                    <td>{{ product_info.saturated_fat }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Trans Fat</th>
+                                    <td>{{ product_info.trans_fat }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Cholesterol</th>
+                                    <td>{{ product_info.cholesterol }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Carbohydrates</th>
+                                    <td>{{ product_info.carbs }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Sugar</th>
+                                    <td>{{ product_info.sugar }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Fiber</th>
+                                    <td>{{ product_info.fiber }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Protein</th>
+                                    <td>{{ product_info.protein }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Salt</th>
+                                    <td>{{ product_info.salt }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Sodium</th>
+                                    <td>{{ product_info.sodium }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h3>List of things to avoid for your health condition</h3>
+                        <h4>Foods to avoid</h4>
+                        <ul>
+                            {% for item in product_info.foods_avoid %}
+                                <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                        <h4>Ingredients to avoid</h4>
+                        <ul>
+                            {% for item in product_info.ing_avoid %}
+                                <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                        <h4>Food categories to avoid</h4>
+                        <ul>
+                            {% for item in product_info.cat_avoid %}
+                                <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {% else %}
+                <p>Product not found.</p>
+                {% endif %}
+                <div class="text-center mt-4">
+                    <a href="{{ url_for('home') }}" class="btn btn-primary">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
